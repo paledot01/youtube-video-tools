@@ -22,19 +22,19 @@
     createZoomButton("+", 1.1);
     createZoomButton("-", 0.9);
     createRotateButton();
-    createFitHeightButton();
+    createFullHeightButton();
     addButtons();
   }, 3500);
 
   function addButtons() {
-    var contenedor = document.getElementById("owner");
-    contenedor.appendChild(buttonZoomIn);
-    contenedor.appendChild(buttonZoomOut);
-    contenedor.appendChild(buttonRotate);
-    contenedor.appendChild(buttonFulltHeight);
+    var contenedor = document.querySelector(".ytp-right-controls");
+    contenedor.insertBefore(buttonZoomIn, contenedor.firstChild);
+    contenedor.insertBefore(buttonZoomOut, contenedor.firstChild);
+    contenedor.insertBefore(buttonRotate, contenedor.firstChild);
+    contenedor.insertBefore(buttonFulltHeight, contenedor.firstChild);
   }
 
-  // --------------- Zoom ----------------
+  // ================================ Zoom ================================
   function createZoomButton(text, scale) {
     var button = document.createElement("button");
     button.appendChild(document.createTextNode(text));
@@ -69,7 +69,7 @@
     video.style.left = left;
   }
 
-  // --------------- Rotate ----------------
+  // ================================ Rotate ================================
   function createRotateButton() {
     buttonRotate = document.createElement("button");
     buttonRotate.appendChild(document.createTextNode("⟳"));
@@ -85,18 +85,46 @@
     }
   }
 
-  // --------------- Full Height ----------------
-  function createFitHeightButton() {
+  // ================================ Full Height ================================
+  function createFullHeightButton() {
     buttonFulltHeight = document.createElement("button");
     buttonFulltHeight.appendChild(document.createTextNode("⇵"));
 
     buttonFulltHeight.addEventListener("click", function () {
       fullHeight();
+      addRemoveFullHeightFeatureToYoutubeButton();
     });
   }
 
   function fullHeight() {
-    var conteinerOfVideo = document.querySelector("#player");
-    conteinerOfVideo.style.height = "calc(100vh - 80px)";
+    // contenedor del video en modo normal que determina el alto es #player. En modo extendido su estilo de este contenedor cambia a display: none
+    var containerOfVideoNormal = document.querySelector("#player");
+    if (window.getComputedStyle(containerOfVideoNormal).display === "none") {
+      // contenedor del video en modo extendido (no fullscreen) que determina el alto es #full-bleed-container
+      var containerOfVideoFull = document.querySelector(
+        "#full-bleed-container"
+      );
+      containerOfVideoFull.style.height = "calc(100vh - 56px)";
+      containerOfVideoFull.style.maxHeight = "none";
+    } else {
+      containerOfVideoNormal.style.height = "calc(100vh - 80px)";
+    }
+  }
+
+  // cuando se cambia modo extendido a normal, el contenedor del video en modo extendido debe tener un alto de 0, por eso se limpia.
+  function addRemoveFullHeightFeatureToYoutubeButton() {
+    var buttonYoutubeSize = document.querySelector(".ytp-size-button");
+    buttonYoutubeSize.addEventListener("click", removeFullHeight);
+
+    function removeFullHeight() {
+      var containerOfVideoNormal = document.querySelector("#player");
+      if (window.getComputedStyle(containerOfVideoNormal).display === "none") {
+        var containerOfVideoFull = document.querySelector(
+          "#full-bleed-container"
+        );
+        containerOfVideoFull.style.height = "";
+        containerOfVideoFull.style.maxHeight = "";
+      }
+    }
   }
 })();
