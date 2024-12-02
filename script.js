@@ -27,17 +27,19 @@
   }, 3500);
 
   function addButtons() {
+    var containerButtons = document.querySelector(".ytp-right-controls");
+    containerButtons.style.display = "flex";
+
     var contenedor = document.querySelector(".ytp-right-controls");
-    contenedor.insertBefore(buttonZoomIn, contenedor.firstChild);
-    contenedor.insertBefore(buttonZoomOut, contenedor.firstChild);
-    contenedor.insertBefore(buttonRotate, contenedor.firstChild);
     contenedor.insertBefore(buttonFulltHeight, contenedor.firstChild);
+    contenedor.insertBefore(buttonRotate, contenedor.firstChild);
+    contenedor.insertBefore(buttonZoomOut, contenedor.firstChild);
+    contenedor.insertBefore(buttonZoomIn, contenedor.firstChild);
   }
 
   // ================================ Zoom ================================
   function createZoomButton(text, scale) {
-    var button = document.createElement("button");
-    button.appendChild(document.createTextNode(text));
+    var button = createButton(text);
 
     button.addEventListener("click", function () {
       zoomVideo(scale);
@@ -71,8 +73,7 @@
 
   // ================================ Rotate ================================
   function createRotateButton() {
-    buttonRotate = document.createElement("button");
-    buttonRotate.appendChild(document.createTextNode("⟳"));
+    buttonRotate = createButton("⟳");
 
     var rotation = 0;
 
@@ -87,8 +88,7 @@
 
   // ================================ Full Height ================================
   function createFullHeightButton() {
-    buttonFulltHeight = document.createElement("button");
-    buttonFulltHeight.appendChild(document.createTextNode("⇵"));
+    buttonFulltHeight = createButton("⇵");
 
     buttonFulltHeight.addEventListener("click", function () {
       fullHeight();
@@ -127,4 +127,38 @@
       }
     }
   }
+
+  // ================================ Create Button ================================
+
+  function createButton(text) {
+    var button = document.createElement("button");
+    button.appendChild(document.createTextNode(text));
+    button.className = "custom-button";
+    return button;
+  }
+
+  // ================================ CSS ================================
+  var css = `
+    .custom-button {
+      background-color: transparent;
+      color: white;
+      width: 30px;
+      height: 100%;
+      text-align: center;
+      display: inline-block;
+      font-size: 24px;
+      font-family: inherit;
+      line-height: inherit;
+      border: none;
+      cursor: pointer;
+      opacity: 0.7;
+    }
+
+    .custom-button:hover {
+  		opacity: 1;
+		}
+	`;
+  var style = document.createElement("style");
+  style.appendChild(document.createTextNode(css));
+  document.head.appendChild(style);
 })();
