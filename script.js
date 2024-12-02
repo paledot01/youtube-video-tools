@@ -112,9 +112,16 @@
   }
 
   // cuando se cambia modo extendido a normal, el contenedor del video en modo extendido debe tener un alto de 0, por eso se limpia.
+  // igual cuando se cambia de modo extendido a fullscreen, necesita limpirse los estilos.
   function addRemoveFullHeightFeatureToYoutubeButton() {
+    // bug con el boton de modo extendido
     var buttonYoutubeSize = document.querySelector(".ytp-size-button");
     buttonYoutubeSize.addEventListener("click", removeFullHeight);
+    // bug con el boton de modo fullscreen
+    var buttonYoutubeFullscreen = document.querySelector(
+      ".ytp-fullscreen-button"
+    );
+    buttonYoutubeFullscreen.addEventListener("click", removeFullHeight);
 
     function removeFullHeight() {
       var containerOfVideoNormal = document.querySelector("#player");
@@ -155,9 +162,9 @@
     }
 
     .custom-button:hover {
-  		opacity: 1;
-		}
-	`;
+      opacity: 1;
+    }
+  `;
   var style = document.createElement("style");
   style.appendChild(document.createTextNode(css));
   document.head.appendChild(style);
