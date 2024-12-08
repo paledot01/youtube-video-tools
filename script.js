@@ -24,7 +24,7 @@
     createRotateButton();
     createFullHeightButton();
     addButtons();
-  }, 3500);
+  }, 3700);
 
   function addButtons() {
     var containerButtons = document.querySelector(".ytp-right-controls");
@@ -61,15 +61,16 @@
   }
 
   function zoomVideo(scale) {
-    var video = document.querySelector("video");
-    var altoContenedor = document.querySelector("#ytd-player").offsetHeight;
-    var leftValue = parseFloat(video.style.left) || 0;
+    var contenedor = document.querySelector("#ytd-player");
+    var anchoContenedor = contenedor.offsetWidth;
+    var altoContenedor = contenedor.offsetHeight;
 
+    var video = document.querySelector("video");
     var anchoVideo = video.clientWidth;
     var altoVideo = video.clientHeight;
 
     var top = (altoContenedor - altoVideo * scale) / 2 + "px";
-    var left = leftValue - ((scale - 1) / 2) * anchoVideo + "px";
+    var left = (anchoContenedor - anchoVideo * scale) / 2 + "px";
 
     anchoVideo *= scale;
     altoVideo *= scale;
@@ -114,9 +115,20 @@
       );
       containerOfVideoFull.style.height = "calc(100vh - 56px)";
       containerOfVideoFull.style.maxHeight = "none";
+      centerVideoInY();
     } else {
       containerOfVideoNormal.style.height = "calc(100vh - 80px)";
+      centerVideoInY();
     }
+  }
+
+  function centerVideoInY() {
+    var altoContenedor = document.querySelector("#ytd-player").offsetHeight;
+    var video = document.querySelector("video");
+    var altoVideo = video.clientHeight;
+
+    var top = (altoContenedor - altoVideo) / 2 + "px";
+    video.style.top = top;
   }
 
   // cuando se cambia modo extendido a normal, el contenedor del video en modo extendido debe tener un alto de 0, por eso se limpia.
@@ -171,7 +183,7 @@
     .video-control-button:hover {
       opacity: 1;
     }
-    
+
     .button-top-aligned {
       position: relative;
       top: -4px;
