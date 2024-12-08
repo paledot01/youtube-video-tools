@@ -30,16 +30,24 @@
     var containerButtons = document.querySelector(".ytp-right-controls");
     containerButtons.style.display = "flex";
 
+    var containerZoom = document.createElement("div");
+    containerZoom.style.display = "flex";
+    containerZoom.style.flexDirection = "column";
+    buttonZoomIn.style.height = "50%";
+    buttonZoomOut.style.height = "50%";
+    containerZoom.appendChild(buttonZoomIn);
+    containerZoom.appendChild(buttonZoomOut);
+
     var contenedor = document.querySelector(".ytp-right-controls");
     contenedor.insertBefore(buttonFulltHeight, contenedor.firstChild);
     contenedor.insertBefore(buttonRotate, contenedor.firstChild);
-    contenedor.insertBefore(buttonZoomOut, contenedor.firstChild);
-    contenedor.insertBefore(buttonZoomIn, contenedor.firstChild);
+    contenedor.insertBefore(containerZoom, contenedor.firstChild);
   }
 
   // ================================ Zoom ================================
   function createZoomButton(text, scale) {
     var button = createButton(text);
+    button.classList.add("button-top-aligned");
 
     button.addEventListener("click", function () {
       zoomVideo(scale);
@@ -140,29 +148,33 @@
   function createButton(text) {
     var button = document.createElement("button");
     button.appendChild(document.createTextNode(text));
-    button.className = "custom-button";
+    button.className = "video-control-button";
     return button;
   }
 
   // ================================ CSS ================================
   var css = `
-    .custom-button {
+    .video-control-button {
       background-color: transparent;
       color: white;
       width: 30px;
       height: 100%;
       text-align: center;
-      display: inline-block;
       font-size: 24px;
-      font-family: inherit;
-      line-height: inherit;
+      font-family: monospace;
+      font-weight: 700;
       border: none;
       cursor: pointer;
       opacity: 0.7;
     }
 
-    .custom-button:hover {
+    .video-control-button:hover {
       opacity: 1;
+    }
+    
+    .button-top-aligned {
+      position: relative;
+      top: -4px;
     }
   `;
   var style = document.createElement("style");
