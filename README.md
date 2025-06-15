@@ -23,3 +23,11 @@ Steps:
 4. Replace the content with the code from the _"script.js"_ file in this repository.
 5. Save the script with _"Ctrl + s"_
 6. Refresh YouTube and enjoy the new features.
+
+### Tools:
+1. Zoom out
+2. Zoom in
+3. Rotation
+4. Expand Height
+
+![youtube-zoom](https://raw.githubusercontent.com/paledot01/youtube-video-tools/refs/heads/main/extra/screenshot_01.webp)
